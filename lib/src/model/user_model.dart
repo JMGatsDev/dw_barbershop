@@ -10,6 +10,14 @@ sealed class UserModel {
   final String name;
   final String email;
   final String? avatar;
+
+  factory UserModel.fromMap(Map<String, dynamic> json) {
+    return switch (json['profile']) {
+      'ADM' => UserModelAdm.fromMap(json),
+      'EMPLOYEE' => UserModelEmployee.fromMap(json),
+      _ => throw ArgumentError('Usuario não existe'),
+    };
+  }
 }
 
 class UserModelAdm extends UserModel {
