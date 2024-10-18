@@ -1,7 +1,5 @@
 # dw_barbershop
-
-A new Flutter project.
-
+Esse App foi feito para barbearias terem o controle sobre procedimentos. Agendamento de cortes de cabelo, barba etc… controle sobre quem está trabalhando no dia e clientes que ele teve  
 ## Getting Started
 
 This project is a starting point for a Flutter application.
