@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:dw_barbershop/src/core/rest_client/intercepter/auth_interceptor.dart';
 
 final class RestClient extends DioForNative {
   RestClient()
@@ -16,17 +17,20 @@ final class RestClient extends DioForNative {
           request: true,
           responseBody: true,
         ),
+        AuthInterceptor(),
       ],
     );
   }
 
   RestClient get auth {
-    options.extra['DIO_AUTH_KEY'] = true; // Defina como true ou um valor apropriado
+    options.extra['DIO_AUTH_KEY'] =
+        true; // Defina como true ou um valor apropriado
     return this;
   }
 
   RestClient get unAuth {
-    options.extra['DIO_AUTH_KEY'] = false; // Certifique-se de que isso seja apropriado
+    options.extra['DIO_AUTH_KEY'] =
+        false; // Certifique-se de que isso seja apropriado
     return this;
   }
 }
