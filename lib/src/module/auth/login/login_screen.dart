@@ -39,9 +39,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             Messages.showError(errorMessage, context);
           case LoginState(status: LoginStateStatus.error):
             Messages.showError('Erro ao realizar login', context);
-            case LoginState(status: LoginStateStatus.admLogin):
+          case LoginState(status: LoginStateStatus.admLogin):
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('home/adm', (route) => false);
             break;
-            case LoginState(status: LoginStateStatus.employeeLogin):
+          case LoginState(status: LoginStateStatus.employeeLogin):
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('home/employee', (route) => false);
+
             break;
         }
       },
@@ -101,6 +106,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             height: MediaQuery.of(context).size.height * 0.035,
                           ),
                           TextFormField(
+                            obscureText: true,
                             controller: passwordController,
                             validator: Validatorless.multiple([
                               Validatorless.required('Senha obrigatória'),
