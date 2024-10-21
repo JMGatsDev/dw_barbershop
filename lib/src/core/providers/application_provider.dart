@@ -1,5 +1,9 @@
+import 'package:dw_barbershop/src/core/exceptions/repository_exception.dart';
 import 'package:dw_barbershop/src/core/funcionalProgram/either.dart';
+import 'package:dw_barbershop/src/model/barbershop_model.dart';
 import 'package:dw_barbershop/src/model/user_model.dart';
+import 'package:dw_barbershop/src/repositories/barbershop/barbershop_repository.dart';
+import 'package:dw_barbershop/src/repositories/barbershop/barbershop_repository_impl.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository_impl.dart';
 import 'package:dw_barbershop/src/core/rest_client/rest_client.dart';
@@ -21,12 +25,31 @@ UserLoginService userLoginService(UserLoginServiceRef ref) =>
     UserLoginServiceImpl(userRepository: ref.read(userRepositoryProvider));
 
 @Riverpod(keepAlive: true)
-Future<UserModel> getMe(GetMeRef ref)async{
-final result = await ref.watch(userRepositoryProvider).me();
+Future<UserModel> getMe(GetMeRef ref) async {
+  final result = await ref.watch(userRepositoryProvider).me();
 
-return switch (result){
-  Success(value:final userModel) => userModel,
-  Failure(:final exception) => throw exception, 
-};
+  return switch (result) {
+    Success(value: final userModel) => userModel,
+    Failure(:final exception) => throw exception,
+  };
+}
 
+@Riverpod(keepAlive: true)
+BarbershopRepository barbershopRepository(BarbershopRepositoryRef ref) =>
+    BarbershopRepositoryImpl(
+      restClient: ref.watch(restClientProvider),
+    );
+
+@Riverpod(keepAlive: true)
+Future<BarbershopModel> getMyBarbershop(GetMyBarbershopRef ref) async {
+  final userModel = await ref.watch(getMeProvider.future);
+  final barbershopRepository = ref.watch(barbershopRepositoryProvider);
+  final result = await barbershopRepository.getMyBarbershop(userModel);
+
+  return switch (result) {
+    Success(value: final barbershop) =>
+      throw barbershop,
+    Failure(:final exception) =>
+      throw exception,
+  };
 }
