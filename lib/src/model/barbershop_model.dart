@@ -24,7 +24,7 @@ class BarbershopModel {
           id: id,
           name: name,
           email: email,
-          openingDays: openingHours.cast<String>(),
+          openingDays: openingDays.cast<String>(),
           openingHours: openingHours.cast<int>(),
         ),
       _ => throw ArgumentError(
