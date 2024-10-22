@@ -19,7 +19,7 @@ class LoginVm extends _$LoginVm {
     final result = await loginService.excute(email, password);
     switch (result) {
       case Success():
-      //! invalidando os caches para evitar login com usuario errado
+        //! invalidando os caches para evitar login com usuario errado
         ref.invalidate(getMeProvider);
         ref.invalidate(getMyBarbershopProvider);
 
