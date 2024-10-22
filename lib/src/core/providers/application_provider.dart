@@ -47,9 +47,7 @@ Future<BarbershopModel> getMyBarbershop(GetMyBarbershopRef ref) async {
   final result = await barbershopRepository.getMyBarbershop(userModel);
 
   return switch (result) {
-    Success(value: final barbershop) =>
-      throw barbershop,
-    Failure(:final exception) =>
-      throw exception,
+    Success(value: final barbershop) => throw barbershop,
+    Failure(:final exception) => throw exception,
   };
 }
