@@ -8,14 +8,13 @@ class AuthInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     final RequestOptions(:headers, :extra) = options;
     const authHeaferKey = 'Authorization';
-
     headers.remove(authHeaferKey);
 
     if (extra case {'DIO_AUTH_KEY': true}) {
       final token = await SharedPreferences.getInstance();
       headers.addAll(
         {
-          authHeaferKey: 'bearer ${token.getString(
+          authHeaferKey: 'Bearer ${token.getString(
             LocalStoregeKeys.accessToken,
           )} '
         },
