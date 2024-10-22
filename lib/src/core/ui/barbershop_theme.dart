@@ -12,6 +12,16 @@ sealed class BarbershopTheme {
   );
 
   static ThemeData themeData = ThemeData(
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      iconTheme: IconThemeData(color: ColorsConstants.brow),
+      backgroundColor: Colors.white,
+      titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 18,
+          color: Colors.black,
+          fontFamily: FontConstante.fontFamily),
+    ),
     useMaterial3: true,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

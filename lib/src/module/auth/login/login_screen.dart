@@ -159,14 +159,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           )
                         ],
                       ),
-                      const Align(
+                      Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text(
-                          'Criar Conta',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16),
+                        child: InkWell(
+                          child: const Text(
+                            'Criar Conta',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                          ),
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed('/auth/register/user');
+                          },
                         ),
                       )
                     ],
