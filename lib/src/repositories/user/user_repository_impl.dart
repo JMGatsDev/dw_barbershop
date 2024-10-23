@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/exceptions/auth_exceptions.dart';
 import 'package:dw_barbershop/src/core/exceptions/repository_exception.dart';
 import 'package:dw_barbershop/src/core/funcionalProgram/either.dart';
+import 'package:dw_barbershop/src/core/funcionalProgram/nil.dart';
 import 'package:dw_barbershop/src/model/user_model.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository.dart';
 import 'package:dw_barbershop/src/core/rest_client/rest_client.dart';
@@ -68,5 +69,22 @@ class UserRepositoryImpl implements UserRepository {
         ),
       );
     }
+  }
+
+  @override
+  Future<Either<RepositoryException, Nil>> registerAdmin(
+      ({String email, String name, String password}) userData) async {
+    try {
+  await restClient.unAuth.post('/users', data: {
+    'name': userData.name,
+    'email': userData.email,
+    'password': userData.password,
+    'profile': 'ADM'
+  });
+  return Success(value: nil);
+} on DioException catch (e,s) {
+  log('Error ao registrar Admin',error: e,stackTrace: s);
+  return Failure(exception: RepositoryException(messages: 'Erro ao registrar Admin'));
+}
   }
 }
