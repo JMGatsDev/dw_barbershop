@@ -7,6 +7,8 @@ import 'package:dw_barbershop/src/module/auth/register/user_register/user_regist
 import 'package:dw_barbershop/src/module/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'module/auth/register/barbershop_register/barbershop_register_screen.dart';
+
 class BarbershopApp extends StatelessWidget {
   const BarbershopApp({super.key});
 
@@ -23,8 +25,7 @@ class BarbershopApp extends StatelessWidget {
             routes: {
               '/': (_) => const SplashScreen(),
               '/auth/login': (_) => const LoginScreen(),
-              '/auth/register/barbershop': (_) =>
-                  const Center(child: Text('Barbershop')),
+              '/auth/register/barbershop': (_) => BarbershopRegisterScreen(),
               '/auth/register/user': (_) => const UserRegisterScreen(),
               '/home/adm': (_) => const Center(child: Text('ADM')),
               '/home/employee': (_) => const Center(child: Text('Emplyee')),

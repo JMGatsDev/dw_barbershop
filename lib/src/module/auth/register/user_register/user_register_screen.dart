@@ -40,8 +40,8 @@ class _UserRegisterScreenState extends ConsumerState<UserRegisterScreen> {
           case UserRegisterStateStatus.initial:
             break;
           case UserRegisterStateStatus.success:
-          Navigator.of(context)
-                .pushNamedAndRemoveUntil('/auth/register/barbershop', (route) => false);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                '/auth/register/barbershop', (route) => false);
           case UserRegisterStateStatus.error:
             Messages.showError('Erro ao Registrar Administrador', context);
             break;
