@@ -1,11 +1,11 @@
 import 'package:dw_barbershop/src/core/ui/helpers/messages.dart';
 import 'package:dw_barbershop/src/module/auth/login/login_screen.dart';
-import 'package:dw_barbershop/src/module/auth/user_register/user_register_vm.dart';
+import 'package:dw_barbershop/src/module/auth/register/user_register/user_register_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
 
-import '../../../core/ui/helpers/form_helpers.dart';
+import '../../../../core/ui/helpers/form_helpers.dart';
 
 class UserRegisterScreen extends ConsumerStatefulWidget {
   const UserRegisterScreen({super.key});
@@ -35,12 +35,13 @@ class _UserRegisterScreenState extends ConsumerState<UserRegisterScreen> {
 
     ref.listen(
       userRegisterVmProvider,
-      (_, state) {
+      (previous, state) {
         switch (state) {
           case UserRegisterStateStatus.initial:
             break;
           case UserRegisterStateStatus.success:
-            Navigator.of(context).pushNamed('/auth/register/barbershop');
+          Navigator.of(context)
+                .pushNamedAndRemoveUntil('/auth/register/barbershop', (route) => false);
           case UserRegisterStateStatus.error:
             Messages.showError('Erro ao Registrar Administrador', context);
             break;

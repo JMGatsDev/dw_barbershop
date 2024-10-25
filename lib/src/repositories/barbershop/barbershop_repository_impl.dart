@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/exceptions/repository_exception.dart';
 
 import 'package:dw_barbershop/src/core/funcionalProgram/either.dart';
-import 'package:dw_barbershop/src/core/providers/application_provider.dart';
 import 'package:dw_barbershop/src/core/rest_client/rest_client.dart';
 
 import 'package:dw_barbershop/src/model/barbershop_model.dart';
