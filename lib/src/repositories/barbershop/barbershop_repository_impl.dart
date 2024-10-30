@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/exceptions/repository_exception.dart';
 
 import 'package:dw_barbershop/src/core/funcionalProgram/either.dart';
+import 'package:dw_barbershop/src/core/funcionalProgram/nil.dart';
 import 'package:dw_barbershop/src/core/rest_client/rest_client.dart';
 
 import 'package:dw_barbershop/src/model/barbershop_model.dart';
@@ -19,7 +22,6 @@ class BarbershopRepositoryImpl implements BarbershopRepository {
   @override
   Future<Either<RepositoryException, BarbershopModel>> getMyBarbershop(
       UserModel model) async {
-    
     switch (model) {
       case UserModelAdm():
         final Response(data: List(first: data)) = await restClient.auth.get(
@@ -37,5 +39,30 @@ class BarbershopRepositoryImpl implements BarbershopRepository {
         );
     }
   }
-}
 
+  @override
+  Future<Either<RepositoryException, Nil>> saveBarbershop(
+      ({
+        String email,
+        String name,
+        List<String> openingDays,
+        List<int> openingHours
+      }) data) async {
+    try {
+      await restClient.auth.post('/barbershop', data: {
+        'user_id': '#userAuthRef',
+        'name': data.name,
+        'email': data.email,
+        'openingDays': data.openingDays,
+        'openingHours': data.openingHours
+      });
+
+      return Success(value: nil);
+    } on DioException catch (e, s) {
+      log('Erro ao registrar barbearia', error: e, stackTrace: s);
+      return Failure(
+        exception: RepositoryException(messages: 'Erro ao registrar barbearia'),
+      );
+    }
+  }
+}

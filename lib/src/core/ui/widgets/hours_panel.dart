@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class HoursPanel extends StatelessWidget {
-  const HoursPanel({super.key});
+  const HoursPanel({
+    super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.onHourPressed,
+  });
+  final int startTime;
+  final int endTime;
+  final ValueChanged<int> onHourPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,61 +33,14 @@ class HoursPanel extends StatelessWidget {
           spacing: 8,
           runSpacing: 16,
           children: [
-            TimeButton(
-              width: width,
-              height: height,
-              text: '08:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '09:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '10:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '11:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '12:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '13:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '14:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '15:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '16:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '17:00',
-            ),
-            TimeButton(
-              width: width,
-              height: height,
-              text: '18:00',
-            ),
+            for (int i = startTime; i <= endTime; i++)
+              TimeButton(
+                onPressed: onHourPressed,
+                value: i,
+                width: width,
+                height: height,
+                text: '${i.toString().padLeft(2, '0')}:00',
+              ),
           ],
         )
       ],
@@ -85,35 +48,54 @@ class HoursPanel extends StatelessWidget {
   }
 }
 
-class TimeButton extends StatelessWidget {
+class TimeButton extends StatefulWidget {
   const TimeButton({
     super.key,
     required this.width,
     required this.height,
     required this.text,
+    required this.onPressed,
+    required this.value,
   });
+  final ValueChanged<int> onPressed;
+  final int value;
   final String text;
   final double width;
   final double height;
 
   @override
+  State<TimeButton> createState() => _TimeButtonState();
+}
+
+class _TimeButtonState extends State<TimeButton> {
+  var selected = false;
+  @override
   Widget build(BuildContext context) {
+    final textColor = selected ? Colors.white : ColorsConstants.brow;
+    var buttonColor = selected ? ColorsConstants.brow : Colors.white;
+    final buttonBorderColor =
+        selected ? ColorsConstants.brow : ColorsConstants.grey;
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: (){},
+      onTap: () {
+        setState(() {
+          widget.onPressed(widget.value);
+          selected = !selected;
+        });
+      },
       child: Container(
-        width: width * 0.2,
-        height: height * 0.05,
+        width: widget.width * 0.2,
+        height: widget.height * 0.05,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-          border: Border.all(color: Colors.grey),
+          color: buttonColor,
+          border: Border.all(color: buttonBorderColor),
         ),
         child: Center(
             child: Text(
-          text,
-          style: const TextStyle(
-              fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
+          widget.text,
+          style: TextStyle(
+              fontSize: 12, color: textColor, fontWeight: FontWeight.w500),
         )),
       ),
     );
