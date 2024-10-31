@@ -1,5 +1,4 @@
 import 'package:dw_barbershop/src/core/ui/helpers/messages.dart';
-import 'package:dw_barbershop/src/module/auth/login/login_screen.dart';
 import 'package:dw_barbershop/src/module/auth/register/user_register/user_register_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
