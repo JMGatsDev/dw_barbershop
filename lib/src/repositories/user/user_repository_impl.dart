@@ -75,16 +75,40 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<RepositoryException, Nil>> registerAdmin(
       ({String email, String name, String password}) userData) async {
     try {
-  await restClient.unAuth.post('/users', data: {
-    'name': userData.name,
-    'email': userData.email,
-    'password': userData.password,
-    'profile': 'ADM'
-  });
-  return Success(value: nil);
-} on DioException catch (e,s) {
-  log('Error ao registrar Admin',error: e,stackTrace: s);
-  return Failure(exception: RepositoryException(messages: 'Erro ao registrar Admin'));
-}
+      await restClient.unAuth.post('/users', data: {
+        'name': userData.name,
+        'email': userData.email,
+        'password': userData.password,
+        'profile': 'ADM'
+      });
+      return Success(value: nil);
+    } on DioException catch (e, s) {
+      log('Error ao registrar Admin', error: e, stackTrace: s);
+      return Failure(
+          exception: RepositoryException(messages: 'Erro ao registrar Admin'));
+    }
+  }
+
+  @override
+  Future<Either<RepositoryException, List<UserModel>>> getEmployees(
+      int barbershopId) async {
+    try {
+      final Response(:List data) = await restClient.auth
+          .get('/users', queryParameters: {'barbershop_id': barbershopId});
+
+      final employees = data.map((e) => UserModelEmployee.fromMap(e)).toList();
+      return Success(value: employees);
+    } on DioException catch (e, s) {
+      log('Erro ao buscar colaboradores', error: e, stackTrace: s);
+      return Failure(
+          exception:
+              RepositoryException(messages: 'Erro ao buscar colaboradores'));
+    } on ArgumentError catch (e, s) {
+      log('Erro ao converter colaboradores (Json Invalido)',
+          error: e, stackTrace: s);
+      return Failure(
+          exception: RepositoryException(
+              messages: 'Erro ao buscar colaboradores ou Json Invalido'));
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:dw_barbershop/src/core/providers/application_provider.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/barbershop_loader.dart';
+import 'package:dw_barbershop/src/module/home/adm/home_adm_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,11 +42,11 @@ class HomeHeader extends ConsumerWidget {
                 SizedBox(
                   width: size.width * 0.05,
                 ),
-                const Flexible(
+                Flexible(
                   child: Text(
                     overflow: TextOverflow.ellipsis,
-                    'João Marcos Gatis Araújo Silva',
-                    style: TextStyle(
+                    barbershop.value!.name,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
@@ -64,7 +65,9 @@ class HomeHeader extends ConsumerWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref.read(homeAdmVmProvider.notifier).logout();
+                  },
                   icon: const Icon(
                     BarbershopIcons.exit,
                     color: ColorsConstants.brow,
