@@ -20,7 +20,9 @@ class HomeAdmScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         backgroundColor: ColorsConstants.brow,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/employee/register');
+        },
         child: const CircleAvatar(
           backgroundColor: Colors.white,
           maxRadius: 12,

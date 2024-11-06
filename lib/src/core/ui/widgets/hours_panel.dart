@@ -8,10 +8,12 @@ class HoursPanel extends StatelessWidget {
     required this.startTime,
     required this.endTime,
     required this.onHourPressed,
+    this.enableTimes,
   });
   final int startTime;
   final int endTime;
   final ValueChanged<int> onHourPressed;
+  final List<int>? enableTimes;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class HoursPanel extends StatelessWidget {
           children: [
             for (int i = startTime; i <= endTime; i++)
               TimeButton(
+                enableTimes: enableTimes,
                 onPressed: onHourPressed,
                 value: i,
                 width: width,
@@ -56,12 +59,14 @@ class TimeButton extends StatefulWidget {
     required this.text,
     required this.onPressed,
     required this.value,
+    this.enableTimes,
   });
   final ValueChanged<int> onPressed;
   final int value;
   final String text;
   final double width;
   final double height;
+  final List<int>? enableTimes;
 
   @override
   State<TimeButton> createState() => _TimeButtonState();
@@ -75,14 +80,22 @@ class _TimeButtonState extends State<TimeButton> {
     var buttonColor = selected ? ColorsConstants.brow : Colors.white;
     final buttonBorderColor =
         selected ? ColorsConstants.brow : ColorsConstants.grey;
+
+    final TimeButton(:value, :text, :enableTimes, :onPressed) = widget;
+    final disableTime = enableTimes != null && !enableTimes.contains(value);
+    if (disableTime) {
+      buttonColor = Colors.grey[400]!;
+    }
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        setState(() {
-          widget.onPressed(widget.value);
-          selected = !selected;
-        });
-      },
+      onTap: disableTime
+          ? null
+          : () {
+              setState(() {
+                widget.onPressed(value);
+                selected = !selected;
+              });
+            },
       child: Container(
         width: widget.width * 0.2,
         height: widget.height * 0.05,
@@ -93,7 +106,7 @@ class _TimeButtonState extends State<TimeButton> {
         ),
         child: Center(
             child: Text(
-          widget.text,
+          text,
           style: TextStyle(
               fontSize: 12, color: textColor, fontWeight: FontWeight.w500),
         )),

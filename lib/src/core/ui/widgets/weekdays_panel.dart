@@ -2,8 +2,9 @@ import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:flutter/material.dart';
 
 class WeekdaysPanel extends StatelessWidget {
-  const WeekdaysPanel({super.key, required this.onPressed});
+  const WeekdaysPanel({super.key, required this.onPressed, this.enableDays});
   final ValueChanged<String> onPressed;
+  final List<String>? enableDays;
 
   @override
   Widget build(BuildContext context) {
@@ -27,47 +28,47 @@ class WeekdaysPanel extends StatelessWidget {
           child: Row(
             children: [
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'Seg',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Seg',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'TER',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Ter',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'QUA',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Qua',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'QUI',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Qui',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'SEX',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Sex',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'SAB',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Sab',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
               ButtonDay(
-                width: width,
-                height: height,
-                text: 'DOM',
-                onPressed: onPressed,
-              ),
+                  width: width,
+                  height: height,
+                  text: 'Dom',
+                  onPressed: onPressed,
+                  enableDays: enableDays),
             ],
           ),
         )
@@ -83,11 +84,13 @@ class ButtonDay extends StatefulWidget {
     required this.height,
     required this.text,
     required this.onPressed,
+    this.enableDays,
   });
   final ValueChanged<String> onPressed;
   final String text;
   final double width;
   final double height;
+  final List<String>? enableDays;
 
   @override
   State<ButtonDay> createState() => _ButtonDayState();
@@ -102,17 +105,23 @@ class _ButtonDayState extends State<ButtonDay> {
     var buttonColor = selected ? ColorsConstants.brow : Colors.white;
     final buttonBorderColor =
         selected ? ColorsConstants.brow : ColorsConstants.grey;
-
+    final ButtonDay(:enableDays, :text) = widget;
+    final disableDay = enableDays != null && !enableDays.contains(text);
+    if (disableDay) {
+      buttonColor = Colors.grey[400]!;
+    }
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () {
-          widget.onPressed(widget.text);
-          setState(() {
-            selected = !selected;
-          });
-        },
+        onTap: disableDay
+            ? null
+            : () {
+                widget.onPressed(text);
+                setState(() {
+                  selected = !selected;
+                });
+              },
         child: Container(
           width: widget.width * 0.1,
           height: widget.height * 0.07,
