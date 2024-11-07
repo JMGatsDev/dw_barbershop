@@ -22,7 +22,7 @@ sealed class UserModel {
 
 class UserModelAdm extends UserModel {
   final List<String>? workDays;
-  final List<String>? workHours;
+  final List<int>? workHours;
   UserModelAdm({
     required super.id,
     required super.name,
@@ -44,7 +44,7 @@ class UserModelAdm extends UserModel {
           email: email,
           avatar: json['avatar'],
           workDays: json['work_days']?.cast<String>(),
-          workHours: json['work_hours']?.cast<String>(),
+          workHours: json['work_hours']?.cast<int>(),
         ),
       _ => throw ArgumentError(
           'json Invalido',
@@ -56,7 +56,7 @@ class UserModelAdm extends UserModel {
 class UserModelEmployee extends UserModel {
   final int barberShopId;
   final List<String> workDays;
-  final List<String> workHours;
+  final List<int> workHours;
   UserModelEmployee({
     required super.id,
     required super.name,
@@ -84,7 +84,7 @@ class UserModelEmployee extends UserModel {
           barberShopId: barbershop_id,
           avatar: map['avatar'],
           workDays: workDays.cast<String>(),
-          workHours: workHours.cast<String>(),
+          workHours: workHours.cast<int>(),
         ),
       _ => throw ArgumentError(
           'json Invalido',
