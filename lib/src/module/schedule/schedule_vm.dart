@@ -6,6 +6,9 @@ import 'package:dw_barbershop/src/model/user_model.dart';
 import 'package:dw_barbershop/src/module/schedule/schedule_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../core/exceptions/repository_exception.dart';
+import '../../core/funcionalProgram/nil.dart';
+
 part 'schedule_vm.g.dart';
 
 @riverpod
@@ -43,11 +46,10 @@ class ScheduleVm extends _$ScheduleVm {
     final scheduleResult = await scheduleRepository.scheduleClient(data);
 
     switch (scheduleResult) {
-      case Success():
-        state.copyWith(status: ScheduleStateStatus.success);
-        print(state.toString());
-      case Failure():
-        state.copyWith(status: ScheduleStateStatus.error);
+      case Success<RepositoryException, Nil>():
+        state = state.copyWith(status: ScheduleStateStatus.success);
+      case Failure<RepositoryException, Nil>():
+        state = state.copyWith(status: ScheduleStateStatus.error);
     }
     asyncLoaderHandler.close();
   }
