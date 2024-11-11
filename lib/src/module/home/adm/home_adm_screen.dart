@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dw_barbershop/src/core/providers/application_provider.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/barbershop_loader.dart';
@@ -18,10 +19,12 @@ class HomeAdmScreen extends ConsumerWidget {
     final homeState = ref.watch(homeAdmVmProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         backgroundColor: ColorsConstants.brow,
         onPressed: () {
           Navigator.of(context).pushNamed('/employee/register');
+          ref.invalidate(getMeProvider);
+          ref.invalidate(homeAdmVmProvider);
         },
         child: const CircleAvatar(
           backgroundColor: Colors.white,
