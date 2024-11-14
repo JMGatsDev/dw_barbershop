@@ -8,6 +8,7 @@ import 'package:dw_barbershop/src/module/auth/register/user_register/user_regist
 import 'package:dw_barbershop/src/module/employee/employee_resgister_screen.dart';
 import 'package:dw_barbershop/src/module/employee/schedule/schedule_employee_screen.dart';
 import 'package:dw_barbershop/src/module/home/adm/home_adm_screen.dart';
+import 'package:dw_barbershop/src/module/home/employee/home_employee_screen.dart';
 import 'package:dw_barbershop/src/module/schedule/schedule_screen.dart';
 import 'package:dw_barbershop/src/module/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class BarbershopApp extends StatelessWidget {
               '/auth/register/barbershop': (_) => BarbershopRegisterScreen(),
               '/auth/register/user': (_) => const UserRegisterScreen(),
               '/home/adm': (_) => const HomeAdmScreen(),
-              '/home/employee': (_) => const Center(child: Text('Emplyee')),
+              '/home/employee': (_) => const HomeEmployeeScreen(),
               '/employee/register': (_) => const EmployeeResgisterScreen(),
               '/schedule': (_) => const Center(child: ScheduleScreen()),
               '/employee/schedule': (_) => const ScheduleEmployeeScreen()

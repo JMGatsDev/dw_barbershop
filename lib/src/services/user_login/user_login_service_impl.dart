@@ -23,10 +23,11 @@ class UserLoginServiceImpl implements UserLoginService {
       case Failure<AuthException, String>(:final exception):
         return switch (exception) {
           AuthError() => Failure(
-              exception: ServiceExceptions(message: 'Erro ao realizar login')),
+              exception: ServiceExceptions(message: 'Erro ao realizar login'),
+            ),
           AuthUnauthorizedException() => Failure(
-              exception:
-                  ServiceExceptions(message: 'Login ou senha Invalidos')),
+              exception: ServiceExceptions(message: 'Login ou senha Invalidos'),
+            ),
         };
       case Success<AuthException, String>(value: final accessToken):
         final sp = await SharedPreferences.getInstance();
