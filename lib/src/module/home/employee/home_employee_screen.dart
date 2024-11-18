@@ -17,11 +17,9 @@ class HomeEmployeeScreen extends ConsumerWidget {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: userModelAsync.when(
-        error: (e, s) {
-          const Center(
-            child: Text('Erro ao carregar pagina'),
-          );
-        },
+        error: (e, s) => const Center(
+          child: Text('Erro ao carregar pagina'),
+        ),
         loading: () => const BarbershopLoader(),
         data: (user) {
           final UserModel(:name, :id) = user;
@@ -63,18 +61,19 @@ class HomeEmployeeScreen extends ConsumerWidget {
                           children: [
                             Consumer(builder: (context, ref, child) {
                               final totalAsync =
-                                  ref.watch(GetTotalSchedulesTodayProvider(id));
+                                  ref.watch(getTotalSchedulesTodayProvider(id));
                               return totalAsync.when(
                                 error: (e, s) {
                                   return const Center(
                                     child: Text(
                                         'Erro ao carregar total de agendamentos'),
                                   );
-                                },skipLoadingOnRefresh: false,
+                                },
+                                skipLoadingOnRefresh: false,
                                 loading: () => const BarbershopLoader(),
                                 data: (data) {
                                   return Text(
-                                    '$totalAsync',
+                                    "${totalAsync.value}",
                                     style: const TextStyle(
                                       color: ColorsConstants.brow,
                                       fontWeight: FontWeight.w600,
