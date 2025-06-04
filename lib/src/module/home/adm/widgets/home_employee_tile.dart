@@ -13,7 +13,7 @@ class HomeEmployeeTile extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
       padding: const EdgeInsets.all(10),
-      height: size.height * 0.11,
+      height: size.height * 0.13,
       width: size.width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

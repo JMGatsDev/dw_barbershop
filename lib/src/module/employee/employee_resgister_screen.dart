@@ -51,8 +51,8 @@ class _EmployeeResgisterScreenState
           break;
         case EmployeeRegisterStateStatus.success:
           Messages.showSuccess('Colaborador cadastrado com Sucesso', context);
-          Navigator.of(context).pop();
-        case EmployeeRegisterStateStatus.error:
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/home/adm', (route) => false);        case EmployeeRegisterStateStatus.error:
           Messages.showError('Erro ao registrar colaborador', context);
       }
     });
